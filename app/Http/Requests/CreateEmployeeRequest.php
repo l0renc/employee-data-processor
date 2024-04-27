@@ -26,13 +26,16 @@ class CreateEmployeeRequest extends FormRequest
             $additionalRules = [
                 'first_name' => 'required|string|max:255',
                 'last_name' => 'required|string|max:255',
-                'department' => 'sometimes|string|max:255',
+                'username' => 'sometimes|string|max:255',
+                'jobTitle' => 'sometimes|string|max:255',
+                'primaryPhone' => 'sometimes|string|max:20',
             ];
         } elseif ($provider === 'provider2') {
             $additionalRules = [
-                'fname' => 'required|string|max:255',
-                'lname' => 'required|string|max:255',
-                'office' => 'sometimes|string|max:255',
+                'first-name' => 'required|string|max:255',
+                'last-name' => 'required|string|max:255',
+                'username' => 'sometimes|string|max:255',
+                'jobTitle' => 'sometimes|string|max:255',
             ];
         }
 

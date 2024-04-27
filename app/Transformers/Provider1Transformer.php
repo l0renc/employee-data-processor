@@ -10,6 +10,8 @@ class Provider1Transformer implements ProviderTransformerInterface
             'firstName' => $data['first_name'] ?? null,
             'lastName' => $data['last_name'] ?? null,
             'email' => $data['email'] ?? null,
+            'username' => $data['username'] ?? null,
+            'jobTitle' => $data['jobTitle'] ?? null,
         ];
 
         return array_filter($transformedData, function ($value) {

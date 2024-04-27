@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Services\EmployeeService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Validator;
@@ -22,17 +23,20 @@ class UpdateEmployeeRequest extends FormRequest
             'email' => 'sometimes|email',
         ];
 
-        if ($provider === 'provider1') {
+        if ($provider === EmployeeService::PROVIDER_1) {
             $additionalRules = [
                 'first_name' => 'sometimes|string|max:255',
                 'last_name' => 'sometimes|string|max:255',
-                'department' => 'sometimes|string|max:255',
+                'username' => 'sometimes|string|max:255',
+                'jobTitle' => 'sometimes|string|max:255',
+                'primaryPhone' => 'sometimes|string|max:20',
             ];
-        } elseif ($provider === 'provider2') {
+        } elseif ($provider === EmployeeService::PROVIDER_2) {
             $additionalRules = [
                 'fname' => 'sometimes|string|max:255',
                 'lname' => 'sometimes|string|max:255',
-                'office' => 'sometimes|string|max:255',
+                'username' => 'sometimes|string|max:255',
+                'jobTitle' => 'sometimes|string|max:255',
             ];
         }
 
@@ -45,8 +49,8 @@ class UpdateEmployeeRequest extends FormRequest
         return [
             function (Validator $validator) {
                 $inputFields = [
-                    'email', 'first_name', 'last_name', 'department',
-                    'fname', 'lname', 'office'
+                    'email', 'first_name', 'last_name', 'primaryPhone', 'first-name',
+                    'last-name', 'username', 'jobTitle'
                 ];
 
                 $hasValidField = false;
@@ -58,7 +62,7 @@ class UpdateEmployeeRequest extends FormRequest
                 }
                 if (!$hasValidField) {
                     $validator->errors()->add('at_least_one', 'At least one field must be provided.');
-                    $jsonResponse = response()->json(['errors' => $validator->errors() ?? 'Invalid Data'], 422);
+                    $jsonResponse = response()->json(['errors' => $validator->errors()], 400);
                     throw new HttpResponseException($jsonResponse);
                 }
             }
