@@ -19,11 +19,6 @@ class EmployeeController extends Controller
         $this->employeeService = $employeeService;
     }
 
-    public function test ()
-    {
-        dd('tttesst');
-    }
-
     /**
      * @param CreateEmployeeRequest $request
      * @param $provider
